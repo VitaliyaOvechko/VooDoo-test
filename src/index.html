@@ -3,111 +3,406 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>VooDoo-test</title>
-    <link href="/css/output.css" rel="stylesheet" />
+    <title>Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              lightSand: '#FCF7E6',
+              white: '#FFFFFF',
+              cartColor: '#1E1E1E',
+            },
+            fontFamily: {
+              inter: "'Inter', sans-serif",
+              spaceGrotesk: "'Space Grotesk', sans-serif",
+              spaceMono: "'Space Mono', monospace",
+            },
+      //       container: {
+      // padding: {
+      //   sm: '2rem',
+      //   lg: '4rem',
+      //   xl: '5rem',
+      //   '2xl': '6rem',
+      // },
+      //       }
+          },
+        },
+      };
+    </script>
     <script type="module" src="./index.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@700&display=swap"
+      rel="stylesheet"
+    />
   </head>
-  <body>
-    <header>
-      <span>V logo</span>
-      <h1 class="">VooDoo Test</h1>
-      <span>Cart</span>
-      <a>
-        <button>Sign-up</button>
-      </a>
-    </header>
-    <section>
-      <div>
-        <h1>ALPHA</h1>
-        <p>Important info regarding our service</p>
-        <span>#</span>
+  <body class="relative container mx-auto">
+    <header class="flex items-center justify-between py-12 pl-16 pr-28 bg-lightSand border-b border-black">
+      <div class="flex">
+        <span>
+          <svg width="45" height="45">
+            <use href="./images/symbol-defs.svg#icon-Logomark"></use>
+          </svg>
+        </span>
+        <span>
+          <svg>
+            <use href="./images/symbol-defs.svg#icon-Logo"></use>
+          </svg>
+        </span>
       </div>
-      <ul>
-        <li>
-          <img />
-          <span>USED</span>
-          <div>
-            <h3>Product name</h3>
-            <p>000 KR</p>
-            <p>Condition</p>
-            <p>Slightly used</p>
+      <div class="flex gap-12">
+        <button id="openBtn">
+          <svg width="24" height="24">
+            <use href="./images/symbol-defs.svg#icon-Cart"></use>
+          </svg>
+        </button>
+        <a>
+          <button
+            class="p-3 font-spaceGrotesk font-bold text-lightSand bg-black rounded"
+          >
+            Sign-up
+          </button>
+        </a>
+      </div>
+    </header>
+    <section class="bg-lightSand px-28 pt-24 pb-48 max-w-screen-2xl">
+      <div id="infoItem" class="flex justify-between p-6 bg-black relative cursor-pointer">
+        <div class="flex">
+          <span class="mr-1.5">
+            <svg width="24" height="24">
+              <use href="./images/symbol-defs.svg#icon-Alert_circle"></use>
+            </svg>
+          </span>
+          <h1 class="mr-12 font-spaceGrotesk font-bold text-lightSand">
+            ALPHA
+          </h1>
+          <p class="font-spaceGrotesk font-medium text-lightSand">
+            Important info regarding our service
+          </p>
+        </div>
+        <span>
+          <svg width="24" height="24">
+            <use href="./images/symbol-defs.svg#icon-Chevron_down"></use>
+          </svg>
+        </span>
+      </div>
+      <h2
+        id="info"
+        class="absolute z-10 w-full h-80 pt-10 bg-cartColor font-spaceGrotesk font-medium text-lightSand text-center hidden"
+      >
+        Important information
+      </h2>
+      <ul
+        id="productList"
+        class="flex flex-wrap gap-x-6 gap-y-12 mt-12 pb-16 justify-center"
+      >
+        <!-- <li class="relative">
+          <img
+            width="300px"
+            height="300px"
+            src="https://cdn.shopify.com/s/files/1/0690/0075/7529/products/5196c9302b12ec8d50d0e700e2865c2a.png?v=1694603298"
+            alt=""
+          />
+          <span
+            class="absolute p-2 bg-black rounded font-spaceGrotesk font-normal text-lightSand text-xs start-5 top-5"
+            >USED</span
+          >
+          <div class="flex items-center justify-between my-3">
+            <div class="font-spaceGrotesk font-bold text-sm">
+              <h3>Product name</h3>
+              <p>000 KR</p>
+            </div>
+            <div class="font-spaceGrotesk text-sm">
+              <p class="font-medium">Condition</p>
+              <p class="font-normal">Slightly used</p>
+            </div>
           </div>
           <a>
-            <button>ADD TO CART</button>
+            <button
+              class="w-full py-4 bg-black font-spaceGrotesk font-bold text-lightSand rounded"
+            >
+              ADD TO CART
+            </button>
           </a>
         </li>
+        <li class="relative">
+          <img
+            width="300px"
+            height="300px"
+            src="https://cdn.shopify.com/s/files/1/0690/0075/7529/products/5196c9302b12ec8d50d0e700e2865c2a.png?v=1694603298"
+            alt=""
+          />
+          <span
+            class="absolute p-2 bg-black rounded font-spaceGrotesk font-normal text-lightSand text-xs start-5 top-5"
+            >USED</span
+          >
+          <div class="flex items-center justify-between my-3">
+            <div class="font-spaceGrotesk font-bold text-sm">
+              <h3>Product name</h3>
+              <p>000 KR</p>
+            </div>
+            <div class="font-spaceGrotesk text-sm">
+              <p class="font-medium">Condition</p>
+              <p class="font-normal">Slightly used</p>
+            </div>
+          </div>
+          <a>
+            <button
+              class="w-full py-4 bg-black font-spaceGrotesk font-bold text-lightSand rounded"
+            >
+              ADD TO CART
+            </button>
+          </a>
+        </li>
+        <li class="relative">
+          <img
+            width="300px"
+            height="300px"
+            src="https://cdn.shopify.com/s/files/1/0690/0075/7529/products/5196c9302b12ec8d50d0e700e2865c2a.png?v=1694603298"
+            alt=""
+          />
+          <span
+            class="absolute p-2 bg-black rounded font-spaceGrotesk font-normal text-lightSand text-xs start-5 top-5"
+            >USED</span
+          >
+          <div class="flex items-center justify-between my-3">
+            <div class="font-spaceGrotesk font-bold text-sm">
+              <h3>Product name</h3>
+              <p>000 KR</p>
+            </div>
+            <div class="font-spaceGrotesk text-sm">
+              <p class="font-medium">Condition</p>
+              <p class="font-normal">Slightly used</p>
+            </div>
+          </div>
+          <a>
+            <button
+              class="w-full py-4 bg-black font-spaceGrotesk font-bold text-lightSand rounded"
+            >
+              ADD TO CART
+            </button>
+          </a>
+        </li>
+        <li class="relative">
+          <img
+            width="300px"
+            height="300px"
+            src="https://cdn.shopify.com/s/files/1/0690/0075/7529/products/5196c9302b12ec8d50d0e700e2865c2a.png?v=1694603298"
+            alt=""
+          />
+          <span
+            class="absolute p-2 bg-black rounded font-spaceGrotesk font-normal text-lightSand text-xs start-5 top-5"
+            >USED</span
+          >
+          <div class="flex items-center justify-between my-3">
+            <div class="font-spaceGrotesk font-bold text-sm">
+              <h3>Product name</h3>
+              <p>000 KR</p>
+            </div>
+            <div class="font-spaceGrotesk text-sm">
+              <p class="font-medium">Condition</p>
+              <p class="font-normal">Slightly used</p>
+            </div>
+          </div>
+          <a>
+            <button
+              class="w-full py-4 bg-black font-spaceGrotesk font-bold text-lightSand rounded"
+            >
+              ADD TO CART
+            </button>
+          </a>
+        </li>
+        <li class="relative">
+          <img
+            width="300px"
+            height="300px"
+            src="https://cdn.shopify.com/s/files/1/0690/0075/7529/products/5196c9302b12ec8d50d0e700e2865c2a.png?v=1694603298"
+            alt=""
+          />
+          <span
+            class="absolute p-2 bg-black rounded font-spaceGrotesk font-normal text-lightSand text-xs start-5 top-5"
+            >USED</span
+          >
+          <div class="flex items-center justify-between my-3">
+            <div class="font-spaceGrotesk font-bold text-sm">
+              <h3>Product name</h3>
+              <p>000 KR</p>
+            </div>
+            <div class="font-spaceGrotesk text-sm">
+              <p class="font-medium">Condition</p>
+              <p class="font-normal">Slightly used</p>
+            </div>
+          </div>
+          <a>
+            <button
+              class="w-full py-4 bg-black font-spaceGrotesk font-bold text-lightSand rounded"
+            >
+              ADD TO CART
+            </button>
+          </a>
+        </li>
+        <li class="relative">
+          <img
+            width="300px"
+            height="300px"
+            src="https://cdn.shopify.com/s/files/1/0690/0075/7529/products/5196c9302b12ec8d50d0e700e2865c2a.png?v=1694603298"
+            alt=""
+          />
+          <span
+            class="absolute p-2 bg-black rounded font-spaceGrotesk font-normal text-lightSand text-xs start-5 top-5"
+            >USED</span
+          >
+          <div class="flex items-center justify-between my-3">
+            <div class="font-spaceGrotesk font-bold text-sm">
+              <h3>Product name</h3>
+              <p>000 KR</p>
+            </div>
+            <div class="font-spaceGrotesk text-sm">
+              <p class="font-medium">Condition</p>
+              <p class="font-normal">Slightly used</p>
+            </div>
+          </div>
+          <a>
+            <button
+              class="w-full py-4 bg-black font-spaceGrotesk font-bold text-lightSand rounded"
+            >
+              ADD TO CART
+            </button>
+          </a>
+        </li> -->
       </ul>
-      <ul>
-        <li>1</li>
-        <li>2</li>
-        <li>3</li>
-        <li>4</li>
-        <li>5</li>
-        <li>...</li>
-        <li>25</li>
+      <ul id="pagination" class="flex gap-2.5 justify-center">
+        <li
+          class="flex items-center justify-center w-10 h-10 border border-black rounded-full font-inter font-light cursor-pointer"
+        >
+          1
+        </li>
+        <li
+          class="flex items-center justify-center w-10 h-10 border border-black rounded-full font-inter font-light cursor-pointer"
+        >
+          2
+        </li>
+        <li
+          class="flex items-center justify-center w-10 h-10 border border-black rounded-full font-inter font-light cursor-pointer"
+        >
+          3
+        </li>
+        <li
+          class="flex items-center justify-center w-10 h-10 border border-black rounded-full font-inter font-light cursor-pointer"
+        >
+          4
+        </li>
+        <li
+          class="flex items-center justify-center w-10 h-10 border border-black rounded-full font-inter font-light cursor-pointer"
+        >
+          5
+        </li>
+        <li
+          class="flex items-center justify-center w-10 h-10 border border-black rounded-full font-inter font-light cursor-pointer"
+        >
+          ...
+        </li>
+        <li
+          class="flex items-center justify-center w-10 h-10 border border-black rounded-full font-inter font-light cursor-pointer"
+        >
+          25
+        </li>
       </ul>
     </section>
-    <footer>
-      <span>V logo</span>
+    <footer class="flex justify-evenly py-20 bg-white border-t border-black">
+      <span>
+        <svg class="" width="50" height="50">
+          <use href="./images/symbol-defs.svg#icon-Logomark"></use>
+        </svg>
+      </span>
       <ul>
         <li>
-          <a> FAQ </a>
+          <a class="font-spaceMono font-bold text-sm"> FAQ </a>
         </li>
         <li>
-          <a> RETURNS </a>
+          <a class="font-spaceMono font-bold text-sm"> RETURNS </a>
         </li>
         <li>
-          <a> CONTACT </a>
+          <a class="font-spaceMono font-bold text-sm"> CONTACT </a>
         </li>
       </ul>
       <ul>
         <li>
-          <a> TERMS & CONDITIONS </a>
+          <a class="font-spaceMono font-bold text-sm"> TERMS & CONDITIONS </a>
         </li>
         <li>
-          <a> PRIVACY POLICY </a>
+          <a class="font-spaceMono font-bold text-sm"> PRIVACY POLICY </a>
         </li>
         <li>
-          <a> COOKIE POLICY </a>
+          <a class="font-spaceMono font-bold text-sm"> COOKIE POLICY </a>
         </li>
         <li>
-          <a> COOKIE SETTINGS </a>
+          <a class="font-spaceMono font-bold text-sm"> COOKIE SETTINGS </a>
         </li>
       </ul>
       <ul>
         <li>
-          <a> ABOUT SECOND CHANCE </a>
+          <a class="font-spaceMono font-bold text-sm"> ABOUT SECOND CHANCE </a>
         </li>
         <li>
-          <a> CAREER </a>
+          <a class="font-spaceMono font-bold text-sm"> CAREER </a>
         </li>
         <li>
-          <a> FACEBOOK </a>
+          <a class="font-spaceMono font-bold text-sm"> FACEBOOK </a>
         </li>
         <li>
-          <a> INSTAGRAM </a>
+          <a class="font-spaceMono font-bold text-sm"> INSTAGRAM </a>
         </li>
       </ul>
     </footer>
 
-    <div>
-      Cart page
-      <h1>Shopping Cart</h1>
-      <span>X</span>
-      <ul>
-        <li>
-          <a>
-            <img />
-            <p>Product Name</p>
-            <p>1 000 KR.</p>
-            <p>- 1 +</p>
+    <div
+      id="cart"
+      class=" absolute top-0 right-0 w-1/3 h-full p-11 bg-cartColor hidden"
+    >
+      <div class="flex justify-between border-b border-lightSand">
+        <h2 class="pb-5 font-spaceGrotesk font-bold text-lg text-lightSand">
+          Shopping Cart
+        </h2>
+        <button id="closeBtn">
+          <svg width="24" height="24">
+            <use href="./images/symbol-defs.svg#icon-Close_line"></use>
+          </svg>
+        </button>
+      </div>
+      <span>
+      <ul id="cartList" class="flex flex-col gap-10 pt-14 pb-8 border-b border-lightSand">
+        <li class="flex justify-between">
+          <a class="flex gap-5">
+            <img
+              width="74px"
+              height="74px"
+              src="https://cdn.shopify.com/s/files/1/0690/0075/7529/products/5196c9302b12ec8d50d0e700e2865c2a.png?v=1694603298"
+              alt=""
+            />
+            <div
+              class="flex flex-col gap-3 font-spaceGrotesk font-bold text-sm text-lightSand"
+            >
+              <p>Product Name</p>
+              <p>0 000 KR.</p>
+              <p>- 1 +</p>
+            </div>
           </a>
-          <span>svg cart</span>
+          <span>
+            <svg width="24" height="24">
+              <use href="./images/symbol-defs.svg#icon-Delete_bin"></use>
+            </svg>
+          </span>
         </li>
       </ul>
-      <div>
+      <div
+        class="flex justify-between pt-9 font-spaceGrotesk font-bold text-sm text-lightSand"
+      >
         <h2>TOTAL</h2>
-        <p>Summ</p>
+        <p id="totalPrice">0 000 KR.</p>
       </div>
     </div>
   </body>
