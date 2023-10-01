@@ -1,5 +1,3 @@
-// import { pagination } from './pagination';
-
 const productList = document.getElementById('productList');
 const cart = document.getElementById('cart');
 const cartList = document.getElementById('cartList');
@@ -40,35 +38,26 @@ function hideInfo() {
 }
 
 //пагінація
-const items = document.querySelectorAll('#pagination li');
-
-let page = 1;
 let productsPerPage = 24;
 const totalNumberOfProducts = 461;
 const totalPages = Math.ceil(totalNumberOfProducts / productsPerPage);
 
-// for (let item of items) {
-//   item.addEventListener('click', function () {
-//     this.classList.add('bg-black');
-
-//     let pageNumber = this.innerHTML;
-//     console.log(pageNumber);
-
-//     fetchProducts()
-//       .then(products => {
-//         renderProductsList(products.products);
-//         page = pageNumber;
-//       })
-//       .catch(error => console.log(error));
-//   });
-// }
+document.addEventListener('click', e => {
+  if (e.target.getAttribute('action-type') === 'pagination-btn') {
+    fetchProducts(e.target.value)
+      .then(products => {
+        renderProductsList(products.products);
+      })
+      .catch(error => console.log(error));
+  }
+});
 
 // Запит за продуктами
-fetchProducts()
+fetchProducts(1)
   .then(products => renderProductsList(products.products))
   .catch(error => console.log(error));
 
-async function fetchProducts() {
+async function fetchProducts(page) {
   const params = new URLSearchParams({
     limit: productsPerPage,
     page: page,
@@ -81,7 +70,7 @@ async function fetchProducts() {
   }
   return await response.json();
 }
-fetchProducts();
+// fetchProducts();
 
 //рендер списку товарів
 function renderProductsList(products) {
@@ -183,23 +172,14 @@ export const addToCart = () => {
 };
 
 const updateCart = product => {
-  const productCartItem = cartList.children[0];
-
-  if (productCartItem.id === product.id) {
-    updateProduct(productCartItem, product);
+  for (const item of cartArray) {
+    if (item.id === product.id) {
+      updateProduct(product);
+    }
   }
-
-  //   const productCartItem = cartList.querySelector(`[data-id="${product.id}"]`);
-
-  //   console.log(productCartItem.dataset.id);
-  //   console.log(product.id);
-
-  //   if (productCartItem.dataset.id === product.id) {
-  //     updateProduct(productCartItem, product);
-  //   }
 };
 
-export const updateProduct = (element, product) => {
+export const updateProduct = product => {
   const priceCartProduct = document.getElementById('price');
   const amountOfProduct = document.getElementById('amountOfProduct');
 
@@ -291,8 +271,18 @@ const renderCartList = products => {
       </div>
           </div>
     </a>
-    <button id="removeBtn" class="py-1 bg-lightSand font-spaceGrotesk font-bold text-black rounded"> X
-    </button>
+        <svg id="removeBtn" class="cursor-pointer"
+xmlns="http://www.w3.org/2000/svg"
+width="20"
+height="20"
+viewBox="0 0 20 20"
+fill="none"
+>
+<path
+  d="M5 2V0H15V2H20V4H18V19C18 19.2652 17.8946 19.5196 17.7071 19.7071C17.5196 19.8946 17.2652 20 17 20H3C2.73478 20 2.48043 19.8946 2.29289 19.7071C2.10536 19.5196 2 19.2652 2 19V4H0V2H5ZM4 4V18H16V4H4ZM7 7H9V15H7V7ZM11 7H13V15H11V7Z"
+  fill="#FCF7E6"
+/>
+</svg>
   </li>
         `;
     })

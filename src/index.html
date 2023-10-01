@@ -19,14 +19,16 @@
               spaceGrotesk: "'Space Grotesk', sans-serif",
               spaceMono: "'Space Mono', monospace",
             },
-      //       container: {
-      // padding: {
-      //   sm: '2rem',
-      //   lg: '4rem',
-      //   xl: '5rem',
-      //   '2xl': '6rem',
-      // },
-      //       }
+            screens: {
+      'mobile': '390px', // => @media (min-width: 390px)
+      'desktop': '1512px', // => @media (min-width: 1512px)
+    },
+                padding: {
+        '5px': '5px',
+      },
+      margin: {
+        '100px': '100px',
+      }
           },
         },
       };
@@ -40,35 +42,39 @@
     />
   </head>
   <body class="relative container mx-auto">
-    <header class="flex items-center justify-between py-12 pl-16 pr-28 bg-lightSand border-b border-black">
+    <header class="flex items-center justify-between p-6 desktop:py-12 desktop:pl-16 desktop:pr-28 bg-lightSand border-b border-black">
       <div class="flex">
         <span>
-          <svg width="45" height="45">
+          <svg class="hidden desktop:inline-block" width="45" height="45">
+            <use href="./images/symbol-defs.svg#icon-Logomark"></use>
+          </svg>
+              <svg class="inline-block desktop:hidden" width="23" height="23">
             <use href="./images/symbol-defs.svg#icon-Logomark"></use>
           </svg>
         </span>
         <span>
-          <svg>
+          <svg class="hidden desktop:inline-block"  width="192" height="98">
+            <use href="./images/symbol-defs.svg#icon-Logo"></use>
+          </svg>
+            <svg class="inline-block desktop:hidden" width="94" height="48">
             <use href="./images/symbol-defs.svg#icon-Logo"></use>
           </svg>
         </span>
       </div>
-      <div class="flex gap-12">
+      <div class="flex gap-3 desktop:gap-12">
         <button id="openBtn">
           <svg width="24" height="24">
             <use href="./images/symbol-defs.svg#icon-Cart"></use>
           </svg>
         </button>
         <a>
-          <button
-            class="p-3 font-spaceGrotesk font-bold text-lightSand bg-black rounded"
-          >
-            Sign-up
+          <button class="p-3 font-spaceGrotesk font-bold text-lightSand bg-black rounded text-sm desktop:text-xl"
+          >Sign-up
           </button>
         </a>
       </div>
     </header>
-    <section class="bg-lightSand px-28 pt-24 pb-48 max-w-screen-2xl">
+    <section class="bg-lightSand p-6 desktop:px-28 desktop:pt-24 max-w-screen-2xl">
       <div id="infoItem" class="flex justify-between p-6 bg-black relative cursor-pointer">
         <div class="flex">
           <span class="mr-1.5">
@@ -76,11 +82,14 @@
               <use href="./images/symbol-defs.svg#icon-Alert_circle"></use>
             </svg>
           </span>
-          <h1 class="mr-12 font-spaceGrotesk font-bold text-lightSand">
+          <h1 class="mr-6 desktop:mr-12 font-spaceGrotesk font-bold text-lightSand">
             ALPHA
           </h1>
-          <p class="font-spaceGrotesk font-medium text-lightSand">
+          <p class="hidden desktop:inline-block font-spaceGrotesk font-medium text-lightSand">
             Important info regarding our service
+          </p>
+          <p class="inline-block desktop:hidden font-spaceGrotesk font-medium text-lightSand">
+            Important info
           </p>
         </div>
         <span>
@@ -89,15 +98,12 @@
           </svg>
         </span>
       </div>
-      <h2
-        id="info"
-        class="absolute z-10 w-fit h-80 pt-10 px-20 bg-cartColor font-spaceGrotesk font-medium text-lightSand text-center hidden"
-      >
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+      <h2 id="info" class="absolute z-10 w-fit h-80 pt-10 px-20 bg-cartColor font-spaceGrotesk font-medium text-lightSand text-center hidden">
+        Important info
       </h2>
       <ul
         id="productList"
-        class="flex flex-wrap gap-x-6 gap-y-12 mt-12 pb-16 justify-center"
+        class="flex flex-wrap gap-x-6 gap-y-12 mt-12 pb-14 desktop:pb-16 justify-center"
       >
         <!-- <li class="relative">
           <img
@@ -274,94 +280,49 @@
           </a>
         </li> -->
       </ul>
-      <ul id="pagination" class="flex gap-2.5 justify-center">
-        <li
-          class="flex items-center justify-center w-10 h-10 border border-black rounded-full font-inter font-light cursor-pointer"
-        >
-          1
-        </li>
-        <li
-          class="flex items-center justify-center w-10 h-10 border border-black rounded-full font-inter font-light cursor-pointer"
-        >
-          2
-        </li>
-        <li
-          class="flex items-center justify-center w-10 h-10 border border-black rounded-full font-inter font-light cursor-pointer"
-        >
-          3
-        </li>
-        <li
-          class="flex items-center justify-center w-10 h-10 border border-black rounded-full font-inter font-light cursor-pointer"
-        >
-          4
-        </li>
-        <li
-          class="flex items-center justify-center w-10 h-10 border border-black rounded-full font-inter font-light cursor-pointer"
-        >
-          5
-        </li>
-        <li
-          class="flex items-center justify-center w-10 h-10 border border-black rounded-full font-inter font-light cursor-pointer"
-        >
-          ...
-        </li>
-        <li
-          class="flex items-center justify-center w-10 h-10 border border-black rounded-full font-inter font-light cursor-pointer"
-        >
-          25
-        </li>
+      <ul id="pagination" class="flex gap-2.5 justify-center mb-52 desktop:mb-48">
+        <li action-type="pagination-btn" value="1" class="flex items-center justify-center w-10 h-10 border border-black rounded-full font-inter font-light cursor-pointer">1</li>
+        <li action-type="pagination-btn" value="2" class="flex items-center justify-center w-10 h-10 border border-black rounded-full font-inter font-light cursor-pointer">2</li>
+        <li action-type="pagination-btn" value="3" class="flex items-center justify-center w-10 h-10 border border-black rounded-full font-inter font-light cursor-pointer">3</li>
+        <li action-type="pagination-btn" value="4" class="flex items-center justify-center w-10 h-10 border border-black rounded-full font-inter font-light cursor-pointer">4</li>
+        <li action-type="pagination-btn" value="5" class="flex items-center justify-center w-10 h-10 border border-black rounded-full font-inter font-light cursor-pointer">5</li>
+        <li action-type="pagination-btn" value="6" class="flex items-center justify-center w-10 h-10 border border-black rounded-full font-inter font-light cursor-pointer">6</li>
+        <li action-type="pagination-btn" value="7" class="flex items-center justify-center w-10 h-10 border border-black rounded-full font-inter font-light cursor-pointer">7</li>
       </ul>
     </section>
-    <footer class="flex justify-evenly py-20 bg-white border-t border-black">
-      <span>
-        <svg class="" width="50" height="50">
-          <use href="./images/symbol-defs.svg#icon-Logomark"></use>
-        </svg>
+    <footer class="flex flex-col desktop:flex-row gap-12 pl-12 desktop:justify-evenly desktop:py-20 bg-white border-t border-black">
+        <span>
+          <svg class="hidden desktop:inline-block" width="45" height="45">
+            <use href="./images/symbol-defs.svg#icon-Logomark"></use>
+          </svg>
+        </span>
+      <ul>
+        <li><a class="font-spaceMono font-bold text-sm cursor-pointer"> FAQ </a></li>
+        <li><a class="font-spaceMono font-bold text-sm cursor-pointer"> RETURNS </a></li>
+        <li><a class="font-spaceMono font-bold text-sm cursor-pointer"> CONTACT </a> </li>
+      </ul>
+      <ul>
+        <li> <a class="font-spaceMono font-bold text-sm cursor-pointer"> TERMS & CONDITIONS </a></li>
+        <li> <a class="font-spaceMono font-bold text-sm cursor-pointer"> PRIVACY POLICY </a></li>
+        <li> <a class="font-spaceMono font-bold text-sm cursor-pointer"> COOKIE POLICY </a></li>
+        <li><a class="font-spaceMono font-bold text-sm cursor-pointer"> COOKIE SETTINGS </a></li>
+      </ul>
+      <ul>
+        <li><a class="font-spaceMono font-bold text-sm cursor-pointer"> ABOUT SECOND CHANCE </a></li>
+        <li><a class="font-spaceMono font-bold text-sm cursor-pointer"> CAREER </a></li>
+        <li><a class="font-spaceMono font-bold text-sm cursor-pointer"> FACEBOOK </a></li>
+        <li><a class="font-spaceMono font-bold text-sm cursor-pointer"> INSTAGRAM </a></li>
+      </ul>
+      <span class="text-center">
+            <svg class="inline-block desktop:hidden" width="23" height="23">
+            <use href="./images/symbol-defs.svg#icon-Logomark"></use>
+          </svg>
       </span>
-      <ul>
-        <li>
-          <a class="font-spaceMono font-bold text-sm"> FAQ </a>
-        </li>
-        <li>
-          <a class="font-spaceMono font-bold text-sm"> RETURNS </a>
-        </li>
-        <li>
-          <a class="font-spaceMono font-bold text-sm"> CONTACT </a>
-        </li>
-      </ul>
-      <ul>
-        <li>
-          <a class="font-spaceMono font-bold text-sm"> TERMS & CONDITIONS </a>
-        </li>
-        <li>
-          <a class="font-spaceMono font-bold text-sm"> PRIVACY POLICY </a>
-        </li>
-        <li>
-          <a class="font-spaceMono font-bold text-sm"> COOKIE POLICY </a>
-        </li>
-        <li>
-          <a class="font-spaceMono font-bold text-sm"> COOKIE SETTINGS </a>
-        </li>
-      </ul>
-      <ul>
-        <li>
-          <a class="font-spaceMono font-bold text-sm"> ABOUT SECOND CHANCE </a>
-        </li>
-        <li>
-          <a class="font-spaceMono font-bold text-sm"> CAREER </a>
-        </li>
-        <li>
-          <a class="font-spaceMono font-bold text-sm"> FACEBOOK </a>
-        </li>
-        <li>
-          <a class="font-spaceMono font-bold text-sm"> INSTAGRAM </a>
-        </li>
-      </ul>
     </footer>
 
     <div
       id="cart"
-      class=" absolute top-0 right-0 w-1/3 h-full p-11 bg-cartColor hidden"
+      class=" absolute top-0 right-0 w-full desktop:w-1/3 h-full p-11 bg-cartColor hidden"
     >
       <div class="flex justify-between border-b border-lightSand">
         <h2 class="pb-5 font-spaceGrotesk font-bold text-lg text-lightSand">
