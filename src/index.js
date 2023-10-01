@@ -1,16 +1,17 @@
+// import { pagination } from './pagination';
+
 const productList = document.getElementById('productList');
-const items = document.querySelectorAll('#pagination li');
 const cart = document.getElementById('cart');
 const cartList = document.getElementById('cartList');
 const openCartBtn = document.getElementById('openBtn');
 const closeCartBtn = document.getElementById('closeBtn');
 const infoItem = document.getElementById('infoItem');
 const information = document.getElementById('info');
-const cartTotalPrice = document.getElementById('totalPrice');
 
 //відкриття та закриття корзини товарів
 openCartBtn.addEventListener('click', openCartProduct);
-closeBtn.addEventListener('click', closeCartProduct);
+closeCartBtn.addEventListener('click', closeCartProduct);
+
 function openCartProduct() {
   cart.classList.remove('hidden');
 }
@@ -21,6 +22,7 @@ function closeCartProduct() {
 
 //відкриття та закриття елементу з додатковою інформацією
 infoItem.addEventListener('click', toggleInfo);
+
 function toggleInfo() {
   if (information.classList.contains('hidden')) {
     showInfo();
@@ -38,6 +40,8 @@ function hideInfo() {
 }
 
 //пагінація
+const items = document.querySelectorAll('#pagination li');
+
 let page = 1;
 let productsPerPage = 24;
 const totalNumberOfProducts = 461;
@@ -45,7 +49,6 @@ const totalPages = Math.ceil(totalNumberOfProducts / productsPerPage);
 
 // for (let item of items) {
 //   item.addEventListener('click', function () {
-//     console.log(this);
 //     this.classList.add('bg-black');
 
 //     let pageNumber = this.innerHTML;
@@ -55,52 +58,28 @@ const totalPages = Math.ceil(totalNumberOfProducts / productsPerPage);
 //       .then(products => {
 //         renderProductsList(products.products);
 //         page = pageNumber;
-
-//         // Replace button text after first request
-//         // if (page > 1) {
-//         //   fetchPostsBtn.textContent = 'Fetch more posts';
-//         // }
 //       })
 //       .catch(error => console.log(error));
 //   });
 // }
 
-// paginatedBtn.addEventListener('click', () => {
-//   // Check the end of the collection to display an alert
-//   if (page > totalPages) {
-//     return toggleAlertPopup();
-//   }
-
-//   fetchProducts()
-//     .then(products => {
-//       renderProductsList(products.products);
-//       page += 1;
-
-//       // Replace button text after first request
-//       if (page > 1) {
-//         fetchPostsBtn.textContent = 'Fetch more posts';
-//       }
-//     })
-//     .catch(error => console.log(error));
-// });
-
+// Запит за продуктами
 fetchProducts()
   .then(products => renderProductsList(products.products))
   .catch(error => console.log(error));
 
-function fetchProducts() {
+async function fetchProducts() {
   const params = new URLSearchParams({
     limit: productsPerPage,
     page: page,
   });
-  return fetch(
+  const response = await fetch(
     `https://voodoo-sandbox.myshopify.com/products.json?${params}`
-  ).then(response => {
-    if (!response.ok) {
-      throw new Error(response.status);
-    }
-    return response.json();
-  });
+  );
+  if (!response.ok) {
+    throw new Error(response.status);
+  }
+  return await response.json();
 }
 fetchProducts();
 
@@ -153,85 +132,142 @@ const cartArray = [];
 
 export const addToCart = () => {
   productList.addEventListener('click', event => {
-    console.log(event);
+    // console.log(event);
     if (event.target.tagName.toLowerCase() == 'button') {
       if (cartArray.length < 1) {
         cartArray.push({
-          id: event.target.parentElement.parentElement.id,
+          id: event.target.parentElement.id,
           title:
-            event.target.parentElement.parentElement.children[2].children[0]
-              .children[0].textContent,
+            event.target.parentElement.children[2].children[0].children[0]
+              .textContent,
+          imageSrc: event.target.parentElement.children[0].currentSrc,
           amount: 1,
           price:
-            event.target.parentElement.parentElement.children[2].children[0]
-              .children[1].children[0].textContent,
+            event.target.parentElement.children[2].children[0].children[1]
+              .children[0].textContent,
         });
       } else {
         const existedProduct = cartArray.find(
-          el => el.id === event.target.parentElement.parentElement.id
+          el => el.id === event.target.parentElement.id
         );
         if (existedProduct) {
           existedProduct.amount++;
         } else {
           cartArray.push({
-            id: event.target.parentElement.parentElement.id,
+            id: event.target.parentElement.id,
             title:
-              event.target.parentElement.parentElement.children[2].children[0]
-                .children[0].textContent,
+              event.target.parentElement.children[2].children[0].children[0]
+                .textContent,
+            imageSrc: event.target.parentElement.children[0].currentSrc,
             amount: 1,
+            price:
+              event.target.parentElement.children[2].children[0].children[1]
+                .children[0].textContent,
             // price: parseFloat(
             //   event.target.parentElement.parentElement.children[2].children[0]
             //     .children[1].children[0].textContent
             // ),
-            price:
-              event.target.parentElement.parentElement.children[2].children[0]
-                .children[1].children[0].textContent,
           });
         }
       }
-      console.log(cartArray);
+      //   console.log(cartArray);
       renderCartList(cartArray);
 
       cartArray.forEach(product => {
-        generateCart(product);
+        updateCart(product);
       });
 
-      //   updateTotal();
+      updateTotalPrice();
     }
   });
 };
 
-const generateCart = product => {
+const updateCart = product => {
   const productCartItem = cartList.children[0];
-  if (product.id === productCartItem.id) {
-    console.log('the same id');
+
+  if (productCartItem.id === product.id) {
     updateProduct(productCartItem, product);
   }
-  //   else {
-  //     cartProducts.appendChild(showInCart(product));
+
+  //   const productCartItem = cartList.querySelector(`[data-id="${product.id}"]`);
+
+  //   console.log(productCartItem.dataset.id);
+  //   console.log(product.id);
+
+  //   if (productCartItem.dataset.id === product.id) {
+  //     updateProduct(productCartItem, product);
   //   }
 };
 
 export const updateProduct = (element, product) => {
   const priceCartProduct = document.getElementById('price');
-  const numberOfProduct = document.getElementById('numberOfProduct');
-
-  console.log(priceCartProduct);
-  console.log(numberOfProduct);
+  const amountOfProduct = document.getElementById('amountOfProduct');
 
   priceCartProduct.textContent = product.amount * product.price;
-  numberOfProduct.textContent = product.amount;
+  amountOfProduct.textContent = product.amount;
+};
+
+const updateTotalPrice = () => {
+  const totalPriceElement = document.getElementById('totalPrice');
+
+  const totalPrice = cartArray.reduce((result, cartItem) => {
+    result += cartItem.amount * cartItem.price;
+    return result;
+  }, 0);
+  totalPriceElement.innerHTML = totalPrice.toFixed(2) + ' KR.';
 };
 
 addToCart();
+
+function cartProductistener() {
+  cart.addEventListener('click', event => {
+    // console.log(event);
+    if (
+      event.target.id === 'removeBtn' ||
+      event.target.id === 'decreaseBtn' ||
+      event.target.id === 'increaseBtn'
+    ) {
+      const productCartElement = event.target.closest('.cartItem');
+      console.log(productCartElement);
+      console.log(productCartElement.id);
+
+      const productCartId = productCartElement.id;
+      if (productCartId) {
+        const productElementIndex = cartArray.findIndex(
+          el => el.id === productCartId
+        );
+        if (event.target.id === 'decreaseBtn') {
+          if (cartArray[productElementIndex].amount === 1) {
+            productCartElement.parentElement.removeChild(productCartElement);
+            cartArray.splice(productElementIndex, 1);
+          } else {
+            cartArray[productElementIndex].amount--;
+            updateCart(cartArray[productElementIndex]);
+          }
+        }
+        if (event.target.id === 'increaseBtn') {
+          cartArray[productElementIndex].amount++;
+          updateCart(cartArray[productElementIndex]);
+        }
+        if (event.target.id === 'removeBtn') {
+          productCartElement.parentElement.removeChild(productCartElement);
+          cartArray.splice(productElementIndex, 1);
+        }
+      }
+      updateTotalPrice();
+    }
+  });
+}
+
+cartProductistener();
 
 //рендер списку товарів в коризині
 const renderCartList = products => {
   const markup = products
     .map(({ id, title, imageSrc, price }) => {
       return `
-          <li class="flex justify-between" id="${id}">
-    <a class="flex">
+          <li class="cartItem flex justify-between" id="${id}">
+    <a class="flex gap-5">
       <img
         width="74px"
         height="74px"
@@ -249,13 +285,13 @@ const renderCartList = products => {
 
       <div class="flex gap-3">
         <button id="decreaseBtn"> - </button>
-        <p id="numberOfProduct"> 1 </p>
+        <p id="amountOfProduct"> 1 </p>
         <button id="increaseBtn"> + </button>
           </div>
       </div>
           </div>
     </a>
-    <button id="removeBtn" class="py-1 bg-lightSand font-spaceGrotesk font-bold text-black rounded"> Rem
+    <button id="removeBtn" class="py-1 bg-lightSand font-spaceGrotesk font-bold text-black rounded"> X
     </button>
   </li>
         `;
@@ -263,46 +299,3 @@ const renderCartList = products => {
     .join('');
   cartList.innerHTML = markup;
 };
-
-function removeCartProduct(e) {
-  //   console.log(e.target);
-  //   if (e.target.id === 'removeBtn') {
-  //     const currentLi = e.target.parentElement;
-  //     const currentId = currentLi.id;
-  //     const savedData = JSON.parse(localStorage.getItem('cart')) || [];
-  //     const newSavedData = savedData.filter(item => item.id !== currentId);
-  //     localStorage.setItem('cart', JSON.stringify(newSavedData));
-  //   }
-  //   const numberOfProduct = e.target.parentElement.children[1];
-  //   const currentNumber = +numberOfProduct.innerText;
-  //   let newNumberOfProduct;
-  //   const priseElement =
-  //     e.target.parentElement.parentElement.children[1].children[0];
-  //   const priceOfProduct = +priseElement.innerText;
-  //   let newPriceOfProduct;
-  //   console.log(priceOfProduct);
-  //   if (e.target.id === 'increaseBtn') {
-  //     newNumberOfProduct = currentNumber + 1;
-  //     newPriceOfProduct = priceOfProduct * newNumberOfProduct;
-  //     console.log(newNumberOfProduct);
-  //     console.log(newPriceOfProduct);
-  //   }
-  //   if (e.target.id === 'decreaseBtn') {
-  //     newNumberOfProduct = currentNumber === 1 ? 1 : currentNumber - 1;
-  //   }
-  //   numberOfProduct.textContent = newNumberOfProduct;
-  //   //   priseElement.textContent = newPriceOfProduct;
-}
-
-//збільшення та зменшення кількості товару в корзині
-
-// const decreaseBtn = document.getElementById('decreaseBtn');
-// const increaseBtn = document.getElementById('increaseBtn');
-// const numberOfProduct = document.getElementById('numberOfProduct');
-// const totalPrice = document.getElementById('totalPrice');
-// // console.log(numberOfProduct.innerText);
-// // console.log(totalPrice.innerText);
-
-// increaseBtn.addEventListener('click', function () {
-//   //   numberOfProduct.innerText = (numberOfProduct.innerText | 0) + 1;
-// });
